@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
     colorSecondary: {
         color: theme.colors.textSecundary
     },
+    colorWhite: {
+        color: 'white'
+    },
     bold: {
         fontWeight: theme.fontWeights.bold
     },
@@ -39,6 +42,7 @@ export default function StyledText ({margin, fontWeight, color, fontSize, childr
         fontWeight === 'bold' && styles.bold,
         margin === 'small' && styles.marginSmall,
         margin === 'big' && styles.marginBig,
+        color === 'white' && styles.colorWhite,
         style
     ]
 

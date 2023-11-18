@@ -11,21 +11,21 @@ const parseThousands = value => {
 const RepositoryStats = props => {
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <View>
-                <StyledText align='center' fontWeight='bold'>Stars</StyledText>
-                <StyledText >{parseThousands(props.stargazersCount)}</StyledText>
+            <View style={{ alignItems: 'center'}}>
+                <StyledText color='white' align='center' fontWeight='bold'>Stars</StyledText>
+                <StyledText color='white' align='center'>{parseThousands(props.stargazersCount)}</StyledText>
             </View>
-            <View>
-                <StyledText align='center' fontWeight='bold'>Forks</StyledText>
-                <StyledText >{parseThousands(props.forksCount)}</StyledText>
+            <View style={{ alignItems: 'center'}}>
+                <StyledText color='white' align='center' fontWeight='bold'>Forks</StyledText>
+                <StyledText color='white' align='center'>{parseThousands(props.forksCount)}</StyledText>
             </View>
-            <View>
-                <StyledText align='center' fontWeight='bold'>Review</StyledText>
-                <StyledText >{props.reviewCount}</StyledText>
+            <View style={{ alignItems: 'center'}}>
+                <StyledText color='white' align='center' fontWeight='bold'>Review</StyledText>
+                <StyledText color='white'>{props.reviewCount}</StyledText>
             </View>
-            <View>
-                <StyledText align='center' fontWeight='bold'>Rating</StyledText>
-                <StyledText >{props.ratingAverage}</StyledText>
+            <View style={{ alignItems: 'center'}}>
+                <StyledText color='white' align='center' fontWeight='bold'>Rating</StyledText>
+                <StyledText color='white' align='center'>{props.ratingAverage}</StyledText>
             </View>
         </View>
     );

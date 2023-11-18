@@ -5,6 +5,7 @@ import Constants from "expo-constants";
 import theme from "./theme";
 import { Link, Route, Routes, useLocation } from "react-router-native";
 import ReposList from "./RepositoryList";
+import LogInPage from "./LogInPage";
 
 const styles = StyleSheet.create({
     container: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
         backgroundColor: theme.appBar.primary,
         paddingTop: Constants.statusBarHeight + 10,
         paddingBottom: 10,
-        paddingLeft: 10
+        paddingLeft: 10,
     },
     text: {
         color: 'grey',
@@ -23,7 +24,8 @@ const styles = StyleSheet.create({
     active: {
         color: theme.appBar.textPrimary,
         backgroundColor: 'grey',
-        padding: 5
+        padding: 5,
+        borderRadius: 4,
     }
 });
 
@@ -47,18 +49,16 @@ const AppBarTab = ({ children, to}) => {
 }
 
 const AppBar = () => {
-
-
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
                 <AppBarTab to='/'>Repositories</AppBarTab>
                 <AppBarTab to='/signin'>Signin</AppBarTab>
             </View>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: 'black' }}>
                 <Routes>
                     <Route exact path='/' element={<ReposList />} />
-                    <Route exact path='/signin' element={<Text>Working in it</Text>} />
+                    <Route exact path='/signin' element={<LogInPage />} />
                 </Routes>
             </View>
 

@@ -6,6 +6,10 @@ import theme from "./theme";
 import { Link, Route, Routes, useLocation } from "react-router-native";
 import ReposList from "./RepositoryList";
 import LogInPage from "./LogInPage";
+import Popular from './Popular';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from "react-native-popup-menu";
+import TopRated from "./TopRated";
+import Upcoming from "./Upcoming";
 
 const styles = StyleSheet.create({
     container: {
@@ -54,11 +58,29 @@ const AppBar = () => {
             <View style={styles.container}>
                 <AppBarTab to='/'>Repositories</AppBarTab>
                 <AppBarTab to='/signin'>Signin</AppBarTab>
+                <Menu>
+                    <MenuTrigger customStyles={{ triggerText: styles.text }} text="Movies" />
+                    <MenuOptions>
+                        <MenuOption>
+                            <AppBarTab to='/popular'>Popular</AppBarTab>
+                        </MenuOption>
+                        <MenuOption>
+                            <AppBarTab to='/top-rated'>Más vistas</AppBarTab>
+                        </MenuOption>
+                        <MenuOption>
+                            <AppBarTab to='/upcoming'>Próximas</AppBarTab>
+                        </MenuOption>
+                    </MenuOptions>
+                </Menu>
+
             </View>
             <View style={{ flex: 1, backgroundColor: 'black' }}>
                 <Routes>
                     <Route exact path='/' element={<ReposList />} />
                     <Route exact path='/signin' element={<LogInPage />} />
+                    <Route exact path='/popular' element={<Popular />} />
+                    <Route exact path='/top-rated' element={<TopRated />} />
+                    <Route exact path='/upcoming' element={<Upcoming />} />
                 </Routes>
             </View>
 

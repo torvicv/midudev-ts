@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FlatList } from "react-native";
 import MovieItem from './MovieItem';
+import { AuthContext } from "../context/AuthProvider";
+import axios from 'axios';
 
 const Upcoming = () => {
 
     const getUrlPopular = process.env.EXPO_PUBLIC_API_URL + 'upcoming';
     const [popularList, setPopularList] = useState([]);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        fetch(getUrlPopular)
-            .then((response) => response.json())
-            .then((response) => {
-                console.log(JSON.stringify(response));
-                setPopularList(response);
+        axios.get(getUrlPopular, {
+            headers: {
+                'Authorization': `Bearer ${user}`,
+                'accept': 'application/json'
+            }
+        })
+            .then(response => {
+                setPopularList(response.data);
             })
-            .catch((error) => console.log(error));
+            
     }, []);
 
     return (

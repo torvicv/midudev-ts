@@ -6,6 +6,7 @@ import { Divider } from "native-base";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { AuthContext } from "../context/AuthProvider";
+import { EXPO_PUBLIC_API_URL } from '@env';
 
 const schema = yup
   .object({
@@ -27,7 +28,7 @@ export default function LogInPage() {
     resolver: yupResolver(schema),
   });
 
-  const getUrlPopular = process.env.EXPO_PUBLIC_API_URL + "sanctum/token";
+  const getUrlPopular = EXPO_PUBLIC_API_URL + "sanctum/token";
 
   const [token, setToken] = useState();
   const [email, setEmail] = useState('');

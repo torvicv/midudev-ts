@@ -6,8 +6,9 @@ import { Divider } from "native-base";
 const RepositoryItemHeader = ({poster_path, title, overview, language}) => (
     <View style={styles.header}>
         <Image width={100} height={100}  
+        style={{width: '100px', height: '100px'}}
         source={{
-            uri: 'https://image.tmdb.org/t/p/original/'+poster_path
+            uri: 'https://image.tmdb.org/t/p/original'+poster_path
         }} />
       <View style={styles.viewHeader}>
         <StyledText color='white' margin='small' fontWeight='bold' fontSize='subheading'>Fullname: {title}</StyledText>

@@ -1,6 +1,8 @@
 import React, { createContext, useState} from "react";
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+import { EXPO_PUBLIC_API_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext();
 
@@ -9,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const getUrlPopular = process.env.EXPO_PUBLIC_API_URL + "sanctum/token";
+    const getUrlPopular = EXPO_PUBLIC_API_URL + "sanctum/token";
 
     return (
         <AuthContext.Provider
@@ -27,6 +29,7 @@ export const AuthProvider = ({ children }) => {
                         setUser(response.data.token);
                         setError(null);
                         SecureStore.setItemAsync('token', response.data.token);
+                        AsyncStorage.setItem('token', response.data.token);
                         setIsLoading(false);
                     }).catch(error => {
                         console.log(error.response);

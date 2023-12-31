@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View, Text } from "react-native";
+import { Image, StyleSheet, View, Text, Platform } from "react-native";
 import StyledText from "./StyledText";
 import theme from "./theme";
 import { Divider } from "native-base";
@@ -51,12 +51,13 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start'
     },
     image: {
-        width: 100,
-        height: 100
+        width: Platform.OS === 'web' ? 200 : 100,
+        height: Platform.OS === 'web' ? 200 : 100
     }, 
     header: {
         paddingBottom: 2,
-        alignItems: 'center'
+        alignItems: 'center',
+        flexDirection: Platform.OS === 'web' ? 'row' : 'column'
     },
     viewHeader: {
         flex: 1,

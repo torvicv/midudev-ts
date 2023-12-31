@@ -1,15 +1,17 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, Text } from "react-native";
 import StyledText from "./StyledText";
 import theme from "./theme";
 import { Divider } from "native-base";
 
 const RepositoryItemHeader = ({poster_path, title, overview, language}) => (
     <View style={styles.header}>
+      <View style={styles.imageContainer} >
         <Image width={100} height={100}  
-        style={{width: '100px', height: '100px'}}
-        source={{
-            uri: 'https://image.tmdb.org/t/p/original'+poster_path
-        }} />
+          style={styles.image}
+          source={{
+              uri: 'https://image.tmdb.org/t/p/original'+poster_path
+          }} />
+      </View>
       <View style={styles.viewHeader}>
         <StyledText color='white' margin='small' fontWeight='bold' fontSize='subheading'>Fullname: {title}</StyledText>
         <StyledText color='white' margin='small'>Description: {overview}</StyledText>
@@ -34,10 +36,12 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         backgroundColor: 'black',
         margin: 20,
+        shadowRadius: 12,
         shadowColor: 'white',
-        shadowOffset: {width: -4, height: 4},
-        shadowOpacity: 1,
-        elevation: 20
+        shadowOffset: {width: 0, height: 0},
+        shadowOpacity: 0.6,
+        elevation: 20,
+        borderRadius: 4,
     },
     language: {
         padding: 4,
@@ -47,8 +51,8 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start'
     },
     image: {
-        width: 75,
-        height: 75
+        width: 100,
+        height: 100
     }, 
     header: {
         paddingBottom: 2,
@@ -58,7 +62,8 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 10,
         alignItems: 'start',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: '100%',
     },
     viewImage: {
         justifyContent: 'center'

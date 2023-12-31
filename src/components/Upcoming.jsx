@@ -17,34 +17,48 @@ const Upcoming = () => {
         AsyncStorage.getItem('token').then(tok => setToken(tok));
     }
 
-    console.log(user);
-    if (user == undefined || user == null) {
-        console.log(2, SecureStore.getItemAsync('token'));
-        SecureStore.getItemAsync('token').then(tok => {
-            setToken(tok);
-        });
-        if (token == null || token == undefined || token == '') {
-            console.log(1);
-            getToken();
-        }
-    } else {
-        console.log(3);
-        setToken(user);
-    }
-
-    console.log(token);
     useEffect(() => {
-        axios.get(getUrlPopular, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'accept': 'application/json'
+        const fetchToken = async () => {
+            try {
+                const storedToken = await SecureStore.getItemAsync('token');
+                setToken(storedToken);
+            } catch (error) {
+                console.error('Error fetching token:', error);
             }
-        })
-            .then(response => {
+
+            if (token == null || token == undefined || token == '') {
+                console.log(1);
+                getToken();
+            }
+        }
+
+        if (!user) {
+            fetchToken();
+        } else {
+            setToken(user);
+        }
+    }, [user]);
+    console.log(user);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(getUrlPopular, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'accept': 'application/json'
+                    }
+                });
                 setPopularList(response.data);
-            })
-            
-    }, [token]);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        if (token) {
+            fetchData();
+        }
+    }, [getUrlPopular, token]);
 
     return (
         <FlatList

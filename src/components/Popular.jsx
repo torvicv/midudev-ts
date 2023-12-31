@@ -17,12 +17,36 @@ const PopularList = () => {
         AsyncStorage.getItem('token').then(tok => setToken(tok));
     }
 
+    useEffect(() => {
+        const fetchToken = async () => {
+            try {
+                const storedToken = await SecureStore.getItemAsync('token');
+                setToken(storedToken);
+            } catch (error) {
+                console.error('Error fetching token:', error);
+            }
+
+            if (token == null || token == undefined || token == '') {
+                console.log(1);
+                getToken();
+            }
+        }
+
+        if (!user) {
+            fetchToken();
+        } else {
+            setToken(user);
+        }
+    }, [user]);
     console.log(user);
-    if (user == undefined || user == null) {
+    /*if (user == undefined || user == null) {
         console.log(2, SecureStore.getItemAsync('token'));
         SecureStore.getItemAsync('token').then(tok => {
             setToken(tok);
-        });
+        })
+        .catch(error => {
+            console.log(4, error);
+        });;
         if (token == null || token == undefined || token == '') {
             console.log(1);
             getToken();
@@ -44,7 +68,27 @@ const PopularList = () => {
                 setPopularList(response.data);
             })
             
-    }, [token]);
+    }, [token]); */
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(getUrlPopular, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'accept': 'application/json'
+                    }
+                });
+                setPopularList(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        if (token) {
+            fetchData();
+        }
+    }, [getUrlPopular, token]);
 
 
     return (

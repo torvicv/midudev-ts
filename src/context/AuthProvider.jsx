@@ -37,6 +37,9 @@ export const AuthProvider = ({ children }) => {
                         setError(error.response.data.errors[key][0]);
                         setIsLoading(false);
                     });
+                },
+                logout: () => {
+                    setUser(null);
                 }
             }}
             >

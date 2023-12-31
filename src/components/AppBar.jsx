@@ -1,15 +1,19 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, StyleSheet, Text, Button } from "react-native";
 import StyledText from "./StyledText";
 import Constants from "expo-constants";
 import theme from "./theme";
-import { Link, Route, Routes, useLocation } from "react-router-native";
+import { Link, Route, Routes, redirect, useLocation, useRoutes } from "react-router-native";
 import ReposList from "./RepositoryList";
 import LogInPage from "./LogInPage";
 import Popular from './Popular';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from "react-native-popup-menu";
 import TopRated from "./TopRated";
 import Upcoming from "./Upcoming";
+import { AuthContext } from "../context/AuthProvider";
+import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
     container: {
@@ -53,6 +57,28 @@ const AppBarTab = ({ children, to}) => {
 }
 
 const AppBar = () => {
+
+    const [token, setToken] = useState(null);
+    const navigate = useNavigate();
+    const { logout, user } = useContext(AuthContext);
+    const getToken = () => {
+        AsyncStorage.setItem('token', '');
+    }
+    const logoutBar = () => {
+        if (user == undefined || user == null) {
+            SecureStore.getItemAsync('token').then(tok => {
+                setToken(tok);
+            });
+            if (token == null || token == undefined || token == '') {
+                console.log(1);
+                getToken();
+            } else {
+                SecureStore.setItemAsync('token', '');
+            }
+        }
+        
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container}>
@@ -72,7 +98,9 @@ const AppBar = () => {
                         </MenuOption>
                     </MenuOptions>
                 </Menu>
-
+                <Button onPress={() => { logout(); logoutBar(); 
+        navigate('/signin'); }} 
+                    title="Logout" />
             </View>
             <View style={{ flex: 1, backgroundColor: 'black' }}>
                 <Routes>
